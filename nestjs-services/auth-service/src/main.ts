@@ -1,17 +1,16 @@
-
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { AuthModule } from './auth.module';
 import { CustomRpcExceptionFilter } from './rpc-exception.filter';
-import { SentimentModule } from './sentiment.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    SentimentModule,
+    AuthModule,
     {
       transport: Transport.RMQ,
       options: {
         urls: ['amqp://localhost:5672'],
-        queue: 'sentiment-queue',
+        queue: 'auth-queue',
         queueOptions: {
           persistent: true,
           durable: false,
